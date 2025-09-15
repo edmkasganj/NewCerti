@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Certificate Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    #certificateCanvas {
+      border: 1px solid #ccc;
+      margin-top: 20px;
+      max-width: 95%;
+      height: auto;
+    }
+    .input-box {
+      margin: 20px;
+    }
+    input, button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin: 5px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    input {
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #1a73e8;
+      color: white;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #1558b0;
+    }
+  </style>
+  <!-- Google font similar to certificate sample -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <h2>Certificate Generator</h2>
+  <div class="input-box">
+    <input type="text" id="nameInput" placeholder="Enter Name">
+    <button onclick="generateCertificate()">Generate Certificate</button>
+    <button onclick="downloadCertificate()">Download Certificate</button>
+  </div>
+
+  <canvas id="certificateCanvas" width="1080" height="720"></canvas>
+
+  <script>
+    const canvas = document.getElementById("certificateCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const background = new Image();
+    background.src = "Dark Blue Floral Patterned Appreciation Certificate.png"; // keep image in same folder
+
+    function generateCertificate() {
+      const name = document.getElementById("nameInput").value;
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw background
+      ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+      // Add Name Text
+      ctx.font = "48px 'Great Vibes', cursive";
+      ctx.fillStyle = "#555"; // adjust to match certificate
+      ctx.textAlign = "center";
+
+      // Adjust X, Y position (centered)
+      ctx.fillText(name, canvas.width / 2, canvas.height / 2 + 50);
+    }
+
+    function downloadCertificate() {
+      const link = document.createElement("a");
+      link.download = "certificate.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    // Preload background
+    background.onload = function() {
+      ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    }
+  </script>
+
+</body>
+</html>
